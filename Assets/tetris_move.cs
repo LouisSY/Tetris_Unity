@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using System;
 
 public class tetris_move : MonoBehaviour
@@ -52,7 +53,7 @@ public class tetris_move : MonoBehaviour
         }
 
         if(Input.GetKeyDown(r)) {
-            restartGame();
+            SceneManager.LoadScene(0);
         } else {
             if (Time.time - previousTime >= (Input.GetKey(down)||Input.GetKey(s)? fallTime/10 : fallTime)) {
             transform.position += new Vector3(0, -1, 0);
@@ -108,21 +109,6 @@ public class tetris_move : MonoBehaviour
             Destroy(grid[j, i].gameObject);
             grid[j, i] = null;
         }
-    }
-
-    void restartGame() {
-        for (int i = 0; i < height; i++) {
-            for (int j = 0; j < width; j++) {
-                try {
-                    Destroy(grid[j, i].gameObject);
-                    grid[j, i] = null;
-                } catch (Exception e) {
-                    Console.WriteLine("{0} Exception caught.", e);
-                }
-                
-            }
-        }
-        // FindObjectOfType<spawn_block>().NewBlock();
     }
 
     void rowDownLine(int i) {

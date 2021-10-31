@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using System.Threading;
 
 public class spawn_block : MonoBehaviour
@@ -8,21 +9,23 @@ public class spawn_block : MonoBehaviour
     public GameObject[] TetrisBlocks;
     public int randomBlock_1 = 10;
     public int randomBlock_2 = 10;
-    private bool pauseGame;
+
+    private KeyCode r = KeyCode.R;
     // Start is called before the first frame update
     void Start()
     {
-        if(!pauseGame) {
-            NewBlock();
+        if(Input.GetKeyDown(r)) {
+            SceneManager.LoadScene(0);
+
         } else {
-            Thread.Sleep(1000);
+            NewBlock();
         }
-        
+        // NewBlock();
     }
 
     void Update()
     {
-        // pauseGame = tetris_move.FindObjectOfType<tetris_move>().pauseGame;
+
     }
 
     public void NewBlock() {
