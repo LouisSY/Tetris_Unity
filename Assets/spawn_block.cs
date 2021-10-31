@@ -22,7 +22,7 @@ public class spawn_block : MonoBehaviour
 
     void Update()
     {
-        pauseGame = tetris_move.FindObjectOfType<tetris_move>().pauseGame;
+        // pauseGame = tetris_move.FindObjectOfType<tetris_move>().pauseGame;
     }
 
     public void NewBlock() {

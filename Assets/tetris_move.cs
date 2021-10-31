@@ -11,7 +11,7 @@ public class tetris_move : MonoBehaviour
     public static int height = 20;
     public static int width = 10;
     private static Transform[,] grid = new Transform[width, height];
-    public bool pauseGame = false;
+    // public bool pauseGame = false;
 
 
     private KeyCode left = KeyCode.LeftArrow;
@@ -23,6 +23,7 @@ public class tetris_move : MonoBehaviour
     private KeyCode d = KeyCode.D;
     private KeyCode s = KeyCode.S;
     private KeyCode w = KeyCode.W;
+    private KeyCode r = KeyCode.R;
     // Start is called before the first frame update
     void Start()
     {
@@ -50,7 +51,10 @@ public class tetris_move : MonoBehaviour
             }
         }
 
-        if (Time.time - previousTime >= (Input.GetKey(down)||Input.GetKey(s)? fallTime/10 : fallTime)) {
+        if(Input.GetKeyDown(r)) {
+            restartGame();
+        } else {
+            if (Time.time - previousTime >= (Input.GetKey(down)||Input.GetKey(s)? fallTime/10 : fallTime)) {
             transform.position += new Vector3(0, -1, 0);
             if (!checkMove()) {
                 transform.position -= new Vector3(0, -1, 0);
@@ -62,6 +66,9 @@ public class tetris_move : MonoBehaviour
             previousTime = Time.time;
 
         }
+        }
+
+        
         
     }
 
@@ -103,6 +110,21 @@ public class tetris_move : MonoBehaviour
         }
     }
 
+    void restartGame() {
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                try {
+                    Destroy(grid[j, i].gameObject);
+                    grid[j, i] = null;
+                } catch (Exception e) {
+                    Console.WriteLine("{0} Exception caught.", e);
+                }
+                
+            }
+        }
+        // FindObjectOfType<spawn_block>().NewBlock();
+    }
+
     void rowDownLine(int i) {
         for(int i_temp = i; i_temp < height; i_temp++) {
             for(int j = 0; j < width; j++) {
@@ -120,12 +142,7 @@ public class tetris_move : MonoBehaviour
             int rounded_x = Mathf.RoundToInt(block.transform.position.x);
             int rounded_y = Mathf.RoundToInt(block.transform.position.y);
 
-            try {
-                grid[rounded_x, rounded_y] = block;
-            } catch (Exception e) {
-                Console.WriteLine("{0} Exception caught.", e);
-                pauseGame = true;
-            }
+            grid[rounded_x, rounded_y] = block;
         }
 
     }
