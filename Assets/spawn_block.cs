@@ -10,17 +10,10 @@ public class spawn_block : MonoBehaviour
     public int randomBlock_1 = 10;
     public int randomBlock_2 = 10;
 
-    private KeyCode r = KeyCode.R;
     // Start is called before the first frame update
     void Start()
     {
-        if(Input.GetKeyDown(r)) {
-            SceneManager.LoadScene(0);
-
-        } else {
-            NewBlock();
-        }
-        // NewBlock();
+        NewBlock();
     }
 
     void Update()
