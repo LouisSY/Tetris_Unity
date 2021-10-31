@@ -25,6 +25,7 @@ public class tetris_move : MonoBehaviour
     private KeyCode s = KeyCode.S;
     private KeyCode w = KeyCode.W;
     private KeyCode r = KeyCode.R;
+    private KeyCode esc = KeyCode.Escape;
     // Start is called before the first frame update
     void Start()
     {
@@ -56,22 +57,26 @@ public class tetris_move : MonoBehaviour
             SceneManager.LoadScene(0);
         } else {
             if (Time.time - previousTime >= (Input.GetKey(down)||Input.GetKey(s)? fallTime/10 : fallTime)) {
-            transform.position += new Vector3(0, -1, 0);
-            if (!checkMove()) {
-                transform.position -= new Vector3(0, -1, 0);
-                addGrid();
-                checkLine();
-                this.enabled = false;
-                FindObjectOfType<spawn_block>().NewBlock();
+                transform.position += new Vector3(0, -1, 0);
+                if (!checkMove()) {
+                    transform.position -= new Vector3(0, -1, 0);
+                    addGrid();
+                    checkLine();
+                    this.enabled = false;
+                    FindObjectOfType<spawn_block>().NewBlock();
+                }
+                previousTime = Time.time;
+
             }
-            previousTime = Time.time;
-
-        }
         }
 
+        if(Input.GetKeyDown(esc)) {
+            Application.Quit();
+        }
         
         
     }
+
 
     bool checkMove() {
         foreach(Transform block in transform) {
